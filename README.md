@@ -37,7 +37,7 @@ Servo Motor
 
 ## Hardware Prototype
 
-![EMG Servo Prototype]("C:\MY DOCUMENTS\ACADEMICS\University\W2025\BME100\IMG_7816.jpeg")
+![EMG Servo Prototype](hardware/emg-servo-prototype.jpg)
 
 The experimental setup consisted of:
 
