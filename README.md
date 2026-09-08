@@ -1,2 +1,253 @@
-# emg-controlled-servo
-EMG-based muscle control system using surface electrodes, an Arduino Uno, and a servo motor to investigate myoelectric actuation and response latency.
+# EMG-Controlled Servo System
+
+A myoelectric control prototype that uses surface electromyography (EMG) signals from the biceps to control a servo motor through an Arduino Uno.
+
+The project was developed to explore the signal pathway used in myoelectric prosthetic systems and investigate the response delay between muscle activation and actuator movement.
+
+---
+
+## Overview
+
+Surface electrodes placed on the biceps capture electrical activity generated during muscle contraction.
+
+The EMG signal is conditioned by an EMG sensor and sent to an Arduino Uno, where the signal is read through an analog input. Muscle activity is compared against an activation threshold and used to control a servo motor.
+
+The prototype demonstrates a simplified version of the signal chain used in myoelectric prosthetic control:
+
+```text
+Biceps Contraction
+        |
+        v
+Surface Electrodes
+        |
+        v
+EMG Sensor
+        |
+        v
+Arduino Uno
+        |
+        v
+Signal Processing
+        |
+        v
+Servo Motor
+```
+
+---
+
+## Hardware Prototype
+
+![EMG Servo Prototype](hardware/emg-servo-prototype.jpg)
+
+The experimental setup consisted of:
+
+- Arduino Uno
+- EMG sensor
+- Surface electrode pads
+- Servo motor
+- Two 9 V batteries
+- Breadboard
+- Jumper wires
+
+The EMG sensor was powered using a dual-voltage supply created from two 9 V batteries.
+
+Two electrodes were positioned over the biceps to measure muscle activity, while a third electrode near the elbow served as the reference.
+
+---
+
+## How It Works
+
+1. Surface electrodes detect electrical activity produced by the biceps.
+
+2. The EMG sensor conditions the biological signal and outputs an analog voltage.
+
+3. The Arduino samples the EMG signal through an analog input.
+
+4. The measured signal is compared against an activation threshold.
+
+5. When muscle activity exceeds the threshold, the Arduino commands the servo motor to move.
+
+6. In the current portfolio revision, sustained muscle activity can maintain servo actuation, with stronger detected signals mapped to larger servo angles.
+
+---
+
+## Arduino Control
+
+The current Arduino implementation continuously monitors the EMG signal and controls the servo according to measured muscle activity.
+
+```text
+Low EMG Activity
+        |
+        v
+Servo at Rest
+
+EMG Above Threshold
+        |
+        v
+Servo Actuation
+
+Greater EMG Amplitude
+        |
+        v
+Greater Servo Angle
+```
+
+The cleaned implementation is available here:
+
+[`src/emg_servo_control.ino`](src/emg_servo_control.ino)
+
+### Portfolio Revision
+
+The original experimental implementation used threshold-based servo activation.
+
+The Arduino code was later refactored for this portfolio version to provide clearer structure and sustained proportional servo control while the EMG signal remains above the activation threshold.
+
+---
+
+## EMG Signal Results
+
+EMG activity was recorded during both relaxed and contracted states of the biceps.
+
+### Relaxed Biceps
+
+![Relaxed EMG Signal](results/emg-relaxed.png)
+
+During relaxation, the measured EMG signal remained relatively low.
+
+### Contracted Biceps
+
+![Contracted EMG Signal](results/emg-contracted.png)
+
+During muscle contraction, the signal showed substantially greater variations and peak amplitudes.
+
+These measurements demonstrate that the system was able to distinguish between relaxed and active muscle states.
+
+---
+
+## Response-Time Experiment
+
+A major objective of the project was to investigate the delay between muscle activation and actuator response.
+
+The experiment was recorded using a standard **30 FPS camera**.
+
+By reviewing the footage frame-by-frame, the servo was observed to begin moving approximately **10–15 frames** after muscle contraction was visually detected.
+
+This produced an estimated response latency of:
+
+**333–500 ms**
+
+Because the timing was determined through video frame counting, this value should be treated as an approximate measurement rather than a high-precision latency measurement.
+
+---
+
+## Experimental Procedure
+
+The basic experimental procedure was:
+
+1. Place two measurement electrodes on the biceps and one reference electrode near the elbow.
+2. Connect the EMG sensor output to the Arduino analog input.
+3. Connect the servo motor to an Arduino digital output.
+4. Record EMG activity while the biceps is relaxed.
+5. Contract the biceps and observe the increase in EMG activity.
+6. Use the Arduino to trigger servo movement when muscle activity exceeds the activation threshold.
+7. Record multiple trials using a 30 FPS camera.
+8. Estimate the delay between visible muscle contraction and servo movement.
+
+---
+
+## Biomedical Engineering Context
+
+Myoelectric prosthetic devices use electrical activity generated by skeletal muscles as an input for controlling powered prosthetic components.
+
+This project explores a simplified version of that concept by translating biceps EMG activity into mechanical movement.
+
+The project combines several areas of biomedical engineering:
+
+- Biosignal acquisition
+- Electromyography
+- Embedded systems
+- Microcontroller programming
+- Sensors and instrumentation
+- Human-machine interfaces
+- Actuator control
+- Prosthetic technology
+
+---
+
+## Technologies
+
+- Arduino Uno
+- Arduino C/C++
+- Electromyography (EMG)
+- Surface electrodes
+- Servo motor control
+- Analog signal acquisition
+- Embedded systems
+- Biosignal processing
+
+---
+
+## Project Files
+
+```text
+emg-controlled-servo/
+|
+|-- README.md
+|
+|-- src/
+|   `-- emg_servo_control.ino
+|
+|-- hardware/
+|   `-- emg-servo-prototype.jpg
+|
+|-- results/
+|   |-- emg-relaxed.png
+|   `-- emg-contracted.png
+|
+`-- docs/
+    `-- system-block-diagram.png
+```
+
+---
+
+## Current Status
+
+The repository currently includes:
+
+- [x] Functional hardware prototype
+- [x] EMG signal acquisition
+- [x] Arduino-based servo control
+- [x] Relaxed and contracted EMG measurements
+- [x] Experimental latency estimate
+- [x] Cleaned Arduino control code
+- [ ] Detailed electrical schematic
+- [ ] Improved latency measurement
+- [ ] Signal filtering and smoothing
+- [ ] Control hysteresis
+- [ ] Technical project report
+- [ ] Demonstration video
+
+---
+
+## Future Improvements
+
+Future development could include:
+
+- Implementing digital filtering to reduce EMG noise
+- Adding hysteresis to improve stability around the activation threshold
+- Calibrating thresholds automatically for individual users
+- Measuring system latency directly in software rather than through video frame counting
+- Testing proportional control strategies
+- Integrating the system with a more representative prosthetic mechanism
+- Creating a complete electrical schematic
+- Evaluating repeatability across multiple trials
+
+---
+
+## Project Background
+
+This project was originally developed as part of a Biomedical Engineering course project investigating response latency in myoelectric prosthetic systems.
+
+The experimental prototype was used to compare relaxed and contracted EMG signals and evaluate the delay between muscle activation and servo response.
+
+The project has since been revisited as a portfolio project, with the Arduino implementation cleaned and the system documentation expanded.
